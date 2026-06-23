@@ -6,7 +6,8 @@ from una_variable import VentanaUnaVariable
 from dos_variables import VentanaDosVariables
 
 from guias.manualusuario import abrir_manual
-
+from guias.ayuda import Ayuda
+ 
 class MiVentana(wx.Frame):
 
     def __init__(self):
@@ -92,6 +93,11 @@ class MiVentana(wx.Frame):
             "&Manual De Usuario\tCtrl+3"
         )
 
+        item_ayuda = menu_ayuda.Append(
+            wx.ID_ANY,
+            "&Guía de Ayuda\tCtrl+3"
+        )
+
         barrabotones.Append(menu_opciones, "&Opciones")
         barrabotones.Append(menu_ayuda, "&Ayuda")
 
@@ -119,6 +125,11 @@ class MiVentana(wx.Frame):
             label="Manual de Usuario"
         )
 
+        self.btn_ayuda = wx.Button(
+            panel,
+            label="Guía de Ayuda"
+        )
+
         self.btn_cerrar = wx.Button(
             panel,
             label="Cerrar App"
@@ -140,6 +151,13 @@ class MiVentana(wx.Frame):
 
         sizer.Add(
             self.btn_manual,
+            0,
+            wx.ALL | wx.CENTER,
+            10
+        )
+
+        sizer.Add(
+            self.btn_ayuda,
             0,
             wx.ALL | wx.CENTER,
             10
@@ -172,6 +190,11 @@ class MiVentana(wx.Frame):
             self.on_manual
         )
 
+        self.btn_ayuda.Bind(
+            wx.EVT_BUTTON,
+            self.on_ayuda
+        )
+
         self.btn_cerrar.Bind(
             wx.EVT_BUTTON,
             self.on_cerrar_app
@@ -196,6 +219,12 @@ class MiVentana(wx.Frame):
             wx.EVT_MENU,
             self.on_manual,
             item_manual
+        )
+
+        self.Bind(
+            wx.EVT_MENU,
+            self.on_ayuda,
+            item_ayuda
         )
 
         self.Bind(
@@ -232,6 +261,10 @@ class MiVentana(wx.Frame):
 
     def on_manual(self, event):
         abrir_manual(self)
+
+    def on_ayuda(self, event):
+        Ayuda(self)
+
     def on_cerrar_app(self, event):
         self.Close()
 
